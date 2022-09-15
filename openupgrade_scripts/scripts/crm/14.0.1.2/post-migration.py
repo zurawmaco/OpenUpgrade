@@ -9,3 +9,11 @@ def migrate(env, version):
     openupgrade.delete_records_safely_by_xml_id(
         env, ["crm.crm_pls_rebuild_threshold_param"]
     )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        delete
+        from ir_model where
+        model = 'crm.partner.binding';"""
+    )
+

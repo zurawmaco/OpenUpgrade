@@ -465,3 +465,10 @@ def migrate(env, version):
     openupgrade.lift_constraints(
         env.cr, "account_bank_statement_line", "partner_account_id"
     )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        delete
+        from ir_model where
+        model = 'account.accrual.accounting.wizard';"""
+    )

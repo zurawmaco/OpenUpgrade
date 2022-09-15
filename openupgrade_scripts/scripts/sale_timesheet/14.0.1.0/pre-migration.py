@@ -31,9 +31,39 @@ def map_pricing_type(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
-    openupgrade.copy_columns(env.cr, _column_copies)
+    # openupgrade.copy_columns(env.cr, _column_copies)
     openupgrade.rename_fields(env, _field_renames)
     map_pricing_type(env)
+    # openupgrade.logged_query(
+    #     env.cr, "ALTER TABLE project_project ADD timesheet_product_id int4"
+    # )
     openupgrade.logged_query(
-        env.cr, "ALTER TABLE project_project ADD timesheet_product_id int4"
+        env.cr,
+        """
+        delete from ir_ui_view where id=1184;
+        """
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        delete from ir_ui_view where inherit_id=1183;
+        """
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        delete from ir_ui_view where id=1183;
+        """
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        delete from ir_ui_view where id=1183;
+        """
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        delete from ir_ui_view where id=1187 and name='project.task.form.inherit.timesheet';
+        """
     )

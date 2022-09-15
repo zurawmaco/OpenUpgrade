@@ -39,3 +39,22 @@ def fast_fill_sale_order_currency_id(env):
 def migrate(env, version):
     openupgrade.rename_xmlids(env.cr, _xmlid_renames)
     fast_fill_sale_order_currency_id(env)
+    openupgrade.logged_query(
+        env.cr,
+        """
+        delete from ir_ui_view where inherit_id=1111;
+        """
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        delete from ir_ui_view where id=1111;
+        """
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        delete from ir_ui_view where id=1717;
+        """
+    )
+

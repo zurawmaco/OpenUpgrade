@@ -28,4 +28,16 @@ def migrate(env, version):
         ],
         True,
     )
+    openupgrade.delete_records_safely_by_xml_id(
+        env, ["hr_timesheet.act_hr_timesheet_line"]
+    )
     _fill_task_overtime(env)
+    openupgrade.logged_query(
+        env.cr,
+        """
+        delete
+        from ir_act_window_view where
+        act_window_id = 726 and view_mode = 'tree';
+        """
+    )
+
