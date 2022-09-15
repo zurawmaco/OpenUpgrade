@@ -131,6 +131,22 @@ def update_account_account_user_type_id(env):
 @openupgrade.migrate()
 def migrate(env, version):
     update_account_account_user_type_id(env)
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE res_country_state
+        SET name = 'Wielkopolskie'
+        WHERE code='WP'
+        """
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE res_country_state
+        SET code = 'WLP'
+        WHERE code='WP'
+        """
+    )
     openupgrade.set_xml_ids_noupdate_value(
         env,
         'l10n_pl',

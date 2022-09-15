@@ -71,5 +71,15 @@ def update_mail_alias_for_moves(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
+    openupgrade.logged_query(
+        env.cr,
+        """
+        DELETE FROM account_account_tag_account_move_line_rel"""
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        DELETE FROM account_account_template"""
+        )
     add_default_account_data(env)
     update_mail_alias_for_moves(env)

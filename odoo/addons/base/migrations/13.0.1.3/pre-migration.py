@@ -786,6 +786,11 @@ def rename_ir_module_category(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
+    openupgrade.logged_query(
+        env.cr, """
+        DELETE FROM res_groups_users_rel
+        WHERE uid IN (313, 305, 306) and gid=55; """
+    )
     openupgrade.remove_tables_fks(env.cr, _obsolete_tables)
     remove_invoice_table_relations(env)
     # Deactivate the noupdate flag (hardcoded on initial SQL load) for allowing
